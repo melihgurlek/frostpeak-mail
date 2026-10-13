@@ -4,8 +4,6 @@ A dark Nordic-fantasy theme for Gmail. Misty mountains and pine forests drawn be
 
 It runs only in your browser, only on `mail.google.com`. It doesn't read your mail for anything other than styling it, and it sends nothing anywhere. Its only permission is `storage`, used to remember your settings and your optional background image.
 
-*Türkçe özet aşağıda.*
-
 ## Install (developer mode)
 
 1. Open `chrome://extensions`.
@@ -67,8 +65,3 @@ Code: MIT, see [LICENSE](LICENSE). Fonts: SIL Open Font License 1.1, see [fonts/
 
 Gmail is a trademark of Google LLC. This project is not affiliated with or endorsed by Google.
 
----
-
-## Türkçe özet
-
-Gmail için koyu, kuzey fantastiği havasında bir tema. Kurulum: `chrome://extensions` → **Geliştirici modu** → **Paketlenmemiş öğe yükle** → bu klasörü seç → Gmail'i yenile. Gmail'de **Tema → Koyu** ve **Okuma bölmesi → Gelen kutusunun sağında** ayarlarını öneririz. Eklenti simgesinden tema, sis ve ejderha açılıp kapatılabilir, kendi arka plan resmin seçilebilir. Resim sadece tarayıcında saklanır.

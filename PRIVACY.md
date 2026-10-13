@@ -31,8 +31,3 @@ Uninstalling the extension deletes all of this.
 
 Questions: open an issue at https://github.com/melihgurlek/frostpeak-mail/issues
 
----
-
-## Türkçe
-
-Frostpeak Mail, Gmail için bir görsel temadır. **Hiçbir veri toplamaz, hiçbir yere veri göndermez.** Sunucusu, analitiği ve reklamı yoktur. Gmail sayfalarında sadece görünümü değiştirmek için çalışır. Okunabilirliği korumak için sayfadaki elemanların renklerine bakar, ama mailinin içeriğini okumaz, saklamaz ve iletmez. Ayarların `chrome.storage.sync` içinde, seçtiğin arka plan resmi ise sadece kendi cihazında `chrome.storage.local` içinde saklanır. Eklentiyi kaldırınca hepsi silinir.
