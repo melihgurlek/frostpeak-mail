@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Frostpeak Mail",
+  "version": "0.1.0",
+  "description": "A dark Nordic-fantasy theme for Gmail: misty mountains, drifting fog, framed menus and a dragon that passes now and then.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "css": ["skin.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    { "resources": ["fonts/*.woff2"], "matches": ["https://mail.google.com/*"] }
+  ],
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "action": {
+    "default_title": "Frostpeak Mail",
+    "default_popup": "popup.html"
+  }
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<!--
+  Preview the sky and the dragon without Gmail.
+  Run a static server from the repo root (python -m http.server 8765) and open http://localhost:8765/dev/sky.html
+  Add #<ms> to jump the clock, e.g. #18000 starts with the dragon mid-crossing and mid-wingbeat.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Frostpeak Mail · sky preview</title>
+<link rel="stylesheet" href="../skin.css">
+<style>body { margin: 0; height: 100vh; }</style>
+</head>
+<body>
+<script>
+  const OFFSET = +(location.hash.slice(1) || 18000);
+  const nativeRaf = window.requestAnimationFrame.bind(window);
+  window.requestAnimationFrame = cb => nativeRaf(ts => cb(ts + OFFSET));
+  // just enough of the extension API for content.js to run on a plain page
+  window.chrome = {
+    runtime: { getURL: p => "../" + p },
+    storage: { sync: { get: (d, cb) => cb(d) }, local: { get: (k, cb) => cb({}) }, onChanged: { addListener() {} } },
+  };
+</script>
+<script src="../content.js"></script>
+</body>
+</html>

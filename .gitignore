@@ -1,0 +1,8 @@
+# early fan mockup, kept locally only (uses game names and characters)
+tamriel-mail.html
+
+# store build output
+dist/
+*.zip
+
+.claude/

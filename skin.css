@@ -1,0 +1,236 @@
+/*
+ * Frostpeak Mail — Gmail skin.
+ * Every rule is scoped under html.frostpeak so the popup can switch the skin off instantly.
+ *
+ * Gmail's class names are obfuscated and change over time, so the skin works in layers:
+ *   1. Gmail's own Material 3 color variables (most stable)
+ *   2. Long-lived Gmail class names (.zA rows, .TO nav items, .T-I buttons, ...)
+ *   3. ARIA roles as a fallback (role="main", role="navigation", role="search")
+ * If something stops matching after a Gmail update, fix it here; the rest keeps working.
+ */
+
+html.frostpeak {
+  --fp-night: #0d0f10;
+  --fp-ink: #e6e2d8;          /* bone white text */
+  --fp-ash: #a9a69e;          /* secondary text */
+  --fp-smoke: #77756f;        /* dates, muted labels */
+  --fp-gold: #d9c48d;         /* stars, accents */
+  --fp-rule: rgba(214, 208, 192, .38);
+  --fp-rule-soft: rgba(214, 208, 192, .16);
+  --fp-glass: rgba(150, 150, 140, .24);
+  --fp-panel: rgba(10, 11, 12, .55);
+  --fp-solid: rgba(16, 17, 18, .96);
+  --fp-font: "Frostpeak Barlow", "Futura Condensed", "Arial Narrow", sans-serif;
+  --fp-rune: "Frostpeak Cinzel", "Trajan Pro", Georgia, serif;
+  --fp-read: "Frostpeak Reading", "Segoe UI", sans-serif;   /* wider sibling for long text: mail list, mail bodies, compose */
+  color-scheme: dark;
+  background: var(--fp-night) !important;
+}
+
+/* ---------- 1. Material 3 tokens Gmail paints with ---------- */
+html.frostpeak, html.frostpeak body {
+  --gm3-sys-color-background: transparent !important;
+  --gm3-sys-color-surface: var(--fp-solid) !important;
+  --gm3-sys-color-surface-container-lowest: var(--fp-solid) !important;
+  --gm3-sys-color-surface-container-low: var(--fp-solid) !important;
+  --gm3-sys-color-surface-container: var(--fp-solid) !important;
+  --gm3-sys-color-surface-container-high: #1c1d1e !important;
+  --gm3-sys-color-surface-container-highest: #232425 !important;
+  --gm3-sys-color-surface-variant: #232425 !important;
+  --gm3-sys-color-on-surface: var(--fp-ink) !important;
+  --gm3-sys-color-on-surface-variant: var(--fp-ash) !important;
+  --gm3-sys-color-on-background: var(--fp-ink) !important;
+  --gm3-sys-color-primary: var(--fp-ink) !important;
+  --gm3-sys-color-on-primary: var(--fp-night) !important;
+  --gm3-sys-color-primary-container: #2a2b2b !important;
+  --gm3-sys-color-on-primary-container: var(--fp-ink) !important;
+  --gm3-sys-color-secondary-container: var(--fp-glass) !important;
+  --gm3-sys-color-on-secondary-container: var(--fp-ink) !important;
+  --gm3-sys-color-outline: var(--fp-rule) !important;
+  --gm3-sys-color-outline-variant: var(--fp-rule-soft) !important;
+  --gm3-sys-color-inverse-surface: var(--fp-ink) !important;
+  --gm3-sys-color-inverse-on-surface: var(--fp-night) !important;
+}
+
+/* ---------- the sky canvas sits behind everything ---------- */
+#frostpeak-sky { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; display: none; }
+html.frostpeak #frostpeak-sky { display: block; }
+html.frostpeak body { background: transparent !important; position: relative; z-index: 1; }
+
+/* ---------- typography ---------- */
+/* Everything reads in the wider face. :where() keeps this rule weak so the condensed spots below win. */
+html.frostpeak :where(body, body :is(div, span, td, th, a, input, textarea, button, h1, h2, h3, h4, li, p, label, font, b, strong):not(.google-material-icons, .material-icons-extended, .google-symbols, .material-symbols-outlined, .a3s *)) {
+  font-family: var(--fp-read) !important;
+}
+/* The condensed game face only where it sets the mood: folder names, the compose button, Reply / Forward. */
+html.frostpeak :is([role="navigation"] .TO, [role="navigation"] .TO *, .T-I.T-I-KE.L3, .T-I.T-I-KE.L3 *, .z0 > [role="button"], .z0 > [role="button"] *, .amn, .amn *):not(.google-material-icons):not(.material-icons-extended):not(.google-symbols):not(.material-symbols-outlined) {
+  font-family: var(--fp-font) !important;
+  letter-spacing: .02em;
+}
+html.frostpeak tr.zA td { font-size: 15px !important; }
+html.frostpeak .Am { font-size: 16px !important; line-height: 1.5 !important; }
+html.frostpeak .a3s { font-family: var(--fp-read) !important; font-size: 16px !important; line-height: 1.45 !important; }
+/* content.js sorts each mail body: plain text gets bone-white ink, mails with their own light design go on parchment */
+html.frostpeak .a3s[data-fp-mail="plain"] { color: var(--fp-ink) !important; }
+html.frostpeak .a3s[data-fp-mail="paper"] {
+  background: #e9e2d0 !important; color: #1f1b14 !important;
+  padding: 18px 22px !important; border: 1px solid var(--fp-rule) !important;
+  box-shadow: 0 0 0 4px var(--fp-solid), 0 0 0 5px var(--fp-rule-soft), 0 12px 40px rgba(0, 0, 0, .5) !important;
+}
+
+/* ---------- 2/3. make the big panes see-through ---------- */
+html.frostpeak :is(.wl, .aeJ, .bkK, .no, .aeF, .aeN, .ae4, .Tm, .AO, .bGI, .nn, .aKh, .aDM, .aC6, .aqJ, .aio, .ain),
+html.frostpeak .nH:has([role="main"]),
+html.frostpeak .nH:has([role="navigation"]),
+html.frostpeak header#gb, html.frostpeak header[role="banner"],
+html.frostpeak [role="navigation"] {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* message list + reading pane: dark glass over the landscape */
+html.frostpeak [role="main"] {
+  background: var(--fp-panel) !important;
+  backdrop-filter: blur(2px);
+  border-radius: 0 !important;
+  border-left: 1px solid var(--fp-rule-soft) !important;
+}
+html.frostpeak [role="main"] :is(.Cp, .F, table.cf, tbody, .ae4, .aDM, .nH, .Bs, .Bu, .if, .adn, .gs, .h7, .ii) { background: transparent !important; }
+
+/* thread rows */
+html.frostpeak tr.zA { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+html.frostpeak tr.zA :is(td) { border-color: transparent !important; color: var(--fp-ash) !important; }
+html.frostpeak tr.zA.zE :is(.bqe, .bog, .yW, .yX, .y6, span) { color: var(--fp-ink) !important; }
+/* unread stands out by colour first; semibold (a real 600 cut) instead of Gmail's 700, which crowded the letters */
+html.frostpeak tr.zA.zE :is(.bqe, .bog, .zF, .yP, b) { font-weight: 600 !important; }
+html.frostpeak :is(.gD, .go) { font-weight: 600 !important; }
+html.frostpeak tr.zA :is(.xW, .xW span) { color: var(--fp-smoke) !important; font-variant-numeric: tabular-nums; }
+html.frostpeak tr.zA:hover { background: rgba(150, 150, 140, .1) !important; }
+html.frostpeak tr.zA:is(.x7, .btb, .aps, [aria-selected="true"]) {
+  background: var(--fp-glass) !important;
+  box-shadow: inset 0 0 0 1px rgba(214, 208, 192, .2) !important;
+}
+html.frostpeak tr.zA .T-KT.T-KT-Jp::before { filter: sepia(1) saturate(2.5) hue-rotate(-10deg); } /* starred: gold */
+
+/* ---------- left nav ---------- */
+html.frostpeak [role="navigation"] :is(.TO, .TN) { background: transparent !important; border-radius: 0 !important; }
+html.frostpeak [role="navigation"] .TO :is(.nU, a, .bsU) { color: var(--fp-smoke) !important; font-size: 17px !important; transition: color .2s; }
+html.frostpeak [role="navigation"] .TO:hover :is(.nU, a, .bsU) { color: var(--fp-ash) !important; }
+html.frostpeak [role="navigation"] .TO.nZ :is(.nU, a, .bsU) { color: var(--fp-ink) !important; font-weight: 500 !important; }
+html.frostpeak [role="navigation"] .TO.nZ { position: relative; overflow: visible !important; }
+html.frostpeak [role="navigation"] .TO.nZ .bsU { margin-right: 24px !important; }   /* keep the count clear of the ornament */
+html.frostpeak [role="navigation"] .TO.nZ::after {
+  content: ""; position: absolute; right: 6px; top: 50%; width: 22px; height: 22px; transform: translateY(-50%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28' fill='none' stroke='%23d6d0c0' stroke-width='1.4'%3E%3Cpath d='M4 4 L14 14 L4 24'/%3E%3Cpath d='M10 8 L16 14 L10 20'/%3E%3Cpath d='M14 4 L24 14 L14 24'/%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events: none;
+}
+html.frostpeak [role="navigation"] { border-right: 1px solid var(--fp-rule-soft) !important; }
+
+/* ---------- framed buttons with arrow-cut ends ---------- */
+html.frostpeak :is(.T-I.T-I-KE.L3, .z0 > [role="button"]) {
+  --cut: 14px;
+  background: rgba(12, 13, 14, .9) !important;
+  color: var(--fp-ink) !important;
+  border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% 50%, calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 50%);
+  outline: 1.5px solid var(--fp-rule) !important; outline-offset: -3px;
+  font-size: 17px !important; font-weight: 400 !important; letter-spacing: .04em;
+  padding-inline: 28px !important; min-width: 0 !important;
+}
+html.frostpeak :is(.T-I.T-I-KE.L3, .z0 > [role="button"]):hover { background: rgba(48, 48, 46, .95) !important; }
+html.frostpeak :is(.T-I.T-I-KE.L3, .z0 > [role="button"]) img { filter: invert(.9) sepia(.3); }
+
+/* search bar */
+html.frostpeak form[role="search"] {
+  background: rgba(12, 13, 14, .85) !important;
+  border: 1px solid var(--fp-rule) !important;
+  border-radius: 0 !important;
+  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0 50%);
+  padding-inline: 10px !important;
+}
+html.frostpeak form[role="search"] input { color: var(--fp-ink) !important; font-size: 17px !important; }
+html.frostpeak form[role="search"] input::placeholder { color: var(--fp-smoke) !important; }
+
+/* ---------- reading pane ---------- */
+html.frostpeak h2.hP { color: var(--fp-ink) !important; font-size: 22px !important; font-weight: 400 !important; }
+html.frostpeak :is(.gD, .go, .g2) { color: var(--fp-ink) !important; }
+html.frostpeak :is(.g3, .hb, .ajn) { color: var(--fp-smoke) !important; }
+html.frostpeak .ha { border-bottom: 1px solid var(--fp-rule-soft) !important; padding-bottom: 12px !important; }
+/* Reply / Forward at the bottom of a thread: plain glowing words */
+html.frostpeak .amn > span[role="button"], html.frostpeak .amn .ams {
+  background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important;
+  color: var(--fp-ink) !important; font-size: 19px !important;
+}
+html.frostpeak .amn > span[role="button"]:hover, html.frostpeak .amn .ams:hover { text-shadow: 0 0 12px rgba(255, 240, 200, .6); }
+/* the white bar Gmail wraps around Reply / Forward: clear every wrapper between it and the main pane */
+html.frostpeak [role="main"] :has(.amn),
+html.frostpeak :is(.ip, .iq, .adB, .aX4) {
+  background: transparent !important; box-shadow: none !important; border-color: transparent !important;
+}
+html.frostpeak .amn { border-top: 1px solid var(--fp-rule-soft) !important; padding-top: 6px !important; }
+html.frostpeak .amn img, html.frostpeak .amn [role="button"] svg { filter: invert(.9) sepia(.3); }
+
+/* smart-reply chips: the wrapper stays invisible; every chip inside gets square, bone-white framing */
+html.frostpeak [role="main"] :is(.bra, .brb, .brc) { background: transparent !important; border: 0 !important; }
+html.frostpeak [role="main"] :is(.bra, .brb, .brc) * {
+  color: var(--fp-ink) !important; border-color: var(--fp-rule) !important; border-radius: 0 !important;
+}
+
+/* safety net from content.js: light boxes Gmail adds under unknown class names */
+html.frostpeak [data-fp-dark] { background-color: var(--fp-solid) !important; border-color: var(--fp-rule-soft) !important; box-shadow: none !important; }
+html.frostpeak [data-fp-dark], html.frostpeak [data-fp-dark] * { color: var(--fp-ink) !important; }
+html.frostpeak [data-fp-ink] { color: var(--fp-ink) !important; }
+html.frostpeak [data-fp-chip] {
+  background-color: rgba(214, 208, 192, .18) !important; box-shadow: inset 0 0 0 1px var(--fp-rule) !important;
+  /* our face is wider than Gmail's, so let the badge size itself to the text instead of Gmail's fixed box */
+  width: auto !important; min-width: max-content !important; height: auto !important;
+  padding: 1px 7px !important; box-sizing: border-box !important;
+  font-size: 12px !important; line-height: 16px !important; letter-spacing: .03em !important; white-space: nowrap !important;
+}
+html.frostpeak [data-fp-chip], html.frostpeak [data-fp-chip] * { color: var(--fp-ink) !important; }
+
+/* links inside the reading pane: old gold instead of Gmail blue */
+html.frostpeak [role="main"] :is(.vem, .yj, .a3s[data-fp-mail="plain"] a) { color: var(--fp-gold) !important; }
+
+/* ---------- compose window ---------- */
+html.frostpeak :is(.AD, .nH.Hd) {
+  background: var(--fp-solid) !important;
+  border: 1px solid var(--fp-rule) !important; border-radius: 0 !important;
+  box-shadow: 0 0 0 4px var(--fp-solid), 0 0 0 5px var(--fp-rule-soft), 0 30px 80px rgba(0, 0, 0, .7) !important;
+}
+html.frostpeak .AD :is(.aDh, .aDg, .aaZ, .GP, .aoD, .aoI, .Am, table, td, .I5, .iN) { background: transparent !important; color: var(--fp-ink) !important; }
+html.frostpeak .AD .aYF { font-family: var(--fp-rune) !important; letter-spacing: .12em; text-transform: uppercase; color: var(--fp-ink) !important; }
+html.frostpeak .AD .T-I-atl, html.frostpeak .AD .dC .T-I {
+  --cut: 12px;
+  background: rgba(12, 13, 14, .9) !important; color: var(--fp-ink) !important; border-radius: 0 !important;
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% 50%, calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 50%);
+  outline: 1.5px solid var(--fp-rule) !important; outline-offset: -3px; padding-inline: 22px !important;
+}
+
+/* ---------- Gmail's own toasts and prompts: a solid framed panel, so nothing shows through ---------- */
+html.frostpeak .vh, html.frostpeak [role="alert"] .bAq {
+  background: var(--fp-solid) !important;
+  color: var(--fp-ink) !important; border-radius: 0 !important;
+  border: 1px solid var(--fp-rule) !important;
+  box-shadow: 0 0 0 3px var(--fp-solid), 0 0 0 4px var(--fp-rule-soft), 0 16px 40px rgba(0, 0, 0, .6) !important;
+  font-family: var(--fp-read) !important; letter-spacing: .01em;
+}
+html.frostpeak .vh :is(a, [role="button"], [role="link"], span[tabindex]) { color: var(--fp-gold) !important; }
+#frostpeak-toast {
+  position: fixed; left: 50%; bottom: 36px; transform: translateX(-50%); z-index: 2147483000;
+  font: 500 15px/1.2 var(--fp-rune); letter-spacing: .14em; text-transform: uppercase; color: #e6e2d8;
+  padding: 12px 56px; pointer-events: none; opacity: 0; transition: opacity .5s; white-space: nowrap;
+  background: linear-gradient(to right, transparent, rgba(10, 10, 10, .9) 20%, rgba(10, 10, 10, .9) 80%, transparent);
+  border-top: 1px solid; border-bottom: 1px solid;
+  border-image: linear-gradient(to right, transparent, rgba(214, 208, 192, .5), transparent) 1;
+}
+#frostpeak-toast.show { opacity: 1; }
+
+/* ---------- menus, tooltips, scrollbars ---------- */
+html.frostpeak :is([role="menu"], [role="listbox"], .J-M, .aXjCH) { background: var(--fp-solid) !important; border: 1px solid var(--fp-rule-soft) !important; border-radius: 0 !important; }
+html.frostpeak ::-webkit-scrollbar { width: 6px; height: 6px; }
+html.frostpeak ::-webkit-scrollbar-thumb { background: rgba(214, 208, 192, .2) !important; border: 0 !important; }
+html.frostpeak ::-webkit-scrollbar-track { background: transparent !important; }
+
+@media (prefers-reduced-motion: reduce) { #frostpeak-toast { transition: none; } }

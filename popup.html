@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Frostpeak Mail</title>
+<style>
+  @font-face { font-family: "Frostpeak Barlow"; src: url(fonts/barlow-400-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+2000-206F; }
+  @font-face { font-family: "Frostpeak Barlow"; src: url(fonts/barlow-400-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA; }
+  @font-face { font-family: "Frostpeak Cinzel"; src: url(fonts/cinzel-latin.woff2) format("woff2"); }
+  :root { color-scheme: dark; --ink: #e6e2d8; --ash: #a9a69e; --rule: rgba(214, 208, 192, .38); }
+  body {
+    margin: 0; width: 250px; padding: 18px 20px 16px; background: #0f1112; color: var(--ink);
+    font: 300 17px "Frostpeak Barlow", "Arial Narrow", sans-serif;
+  }
+  h1 { font: 500 15px "Frostpeak Cinzel", Georgia, serif; letter-spacing: .16em; text-transform: uppercase; text-align: center; margin: 0 0 14px;
+       padding-bottom: 10px; border-bottom: 1px solid; border-image: linear-gradient(to right, transparent, var(--rule), transparent) 1; }
+  label { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; cursor: pointer; }
+  label.off { color: #6c6b66; }
+  input { appearance: none; width: 16px; height: 16px; margin: 0; border: 1px solid var(--rule); transform: rotate(45deg); cursor: pointer; }
+  input:checked { background: radial-gradient(var(--ink) 35%, transparent 40%); }
+  input:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+  #bg { width: 100%; margin-top: 10px; padding: 7px 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer;
+        border: 1px solid var(--rule); }
+  #bg:hover, #bg:focus-visible { background: rgba(214, 208, 192, .1); outline: none; }
+  p { color: var(--ash); font-size: 14px; margin: 12px 0 0; line-height: 1.35; }
+</style>
+</head>
+<body>
+  <h1>Frostpeak Mail</h1>
+  <label for="enabled">Tema açık <input type="checkbox" id="enabled"></label>
+  <label for="animated">Hareketli sis <input type="checkbox" id="animated"></label>
+  <label for="dragon">Ejderha <input type="checkbox" id="dragon"></label>
+  <button type="button" id="bg">Arka plan resmi seç…</button>
+  <p>Değişiklikler açık Gmail sekmelerine anında uygulanır.</p>
+  <script src="popup.js"></script>
+</body>
+</html>
