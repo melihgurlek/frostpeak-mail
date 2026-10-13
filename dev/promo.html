@@ -1,0 +1,78 @@
+<!doctype html>
+<!--
+  Store promo images from the real sky renderer.
+  Serve the repo root (python -m http.server 8765), open http://localhost:8765/dev/promo.html,
+  wait for the dragon to sit where you like it, then press the download buttons.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Frostpeak Mail · promo images</title>
+<style>
+  @font-face { font-family: "Frostpeak Cinzel"; src: url(../fonts/cinzel-latin.woff2) format("woff2"); }
+  @font-face { font-family: "Frostpeak Reading"; src: url(../fonts/barlow-semi-400-latin.woff2) format("woff2"); }
+  body { margin: 0; padding: 24px 16px; background: #0d0f10; color: #e6e2d8; font: 16px "Frostpeak Reading", sans-serif; display: grid; gap: 28px; justify-items: start; }
+  h1 { font: 500 18px "Frostpeak Cinzel", serif; letter-spacing: .16em; text-transform: uppercase; margin: 0; }
+  section { display: grid; gap: 10px; max-width: 100%; }
+  .wrap { overflow-x: auto; max-width: calc(100vw - 32px); }
+  iframe { border: 0; display: block; }
+  canvas { display: block; outline: 1px solid rgba(214, 208, 192, .3); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  button { background: transparent; color: inherit; font: inherit; border: 1px solid rgba(214, 208, 192, .4); padding: 6px 16px; cursor: pointer; }
+  button:hover { background: rgba(214, 208, 192, .1); }
+</style>
+</head>
+<body>
+<h1>Promo images</h1>
+<p>Each frame below is the live sky. "Capture" freezes the current frame with the title on top; "Download" saves it as PNG.</p>
+
+<section data-w="440" data-h="280" data-file="frostpeak-small-tile-440x280.png">
+  <strong>Small promo tile · 440 × 280</strong>
+  <div class="wrap"><iframe src="sky.html#14000" width="440" height="280"></iframe></div>
+  <div class="row"><button type="button" class="cap">Capture</button><button type="button" class="dl">Download</button></div>
+  <div class="wrap"><canvas width="440" height="280"></canvas></div>
+</section>
+
+<section data-w="1400" data-h="560" data-file="frostpeak-marquee-1400x560.png">
+  <strong>Marquee · 1400 × 560</strong>
+  <div class="wrap"><iframe src="sky.html#14000" width="1400" height="560"></iframe></div>
+  <div class="row"><button type="button" class="cap">Capture</button><button type="button" class="dl">Download</button></div>
+  <div class="wrap"><canvas width="1400" height="560"></canvas></div>
+</section>
+
+<script>
+function capture(sec) {
+  const w = +sec.dataset.w, h = +sec.dataset.h;
+  const sky = sec.querySelector("iframe").contentDocument.getElementById("frostpeak-sky");
+  const g = sec.querySelector("canvas").getContext("2d");
+  g.drawImage(sky, 0, 0, w, h);
+  // title block, bottom left, scaled to the image
+  const u = h / 280;
+  const fade = g.createLinearGradient(0, h * .45, 0, h);
+  fade.addColorStop(0, "rgba(0,0,0,0)"); fade.addColorStop(1, "rgba(0,0,0,.55)");
+  g.fillStyle = fade; g.fillRect(0, 0, w, h);
+  g.fillStyle = "#e6e2d8";
+  g.font = `500 ${Math.round(30 * u)}px "Frostpeak Cinzel", serif`;
+  g.letterSpacing = `${Math.round(4 * u)}px`;
+  g.fillText("FROSTPEAK MAIL", 28 * u, h - 52 * u);
+  g.font = `400 ${Math.round(17 * u)}px "Frostpeak Reading", sans-serif`;
+  g.letterSpacing = "0px";
+  g.fillStyle = "#a9a69e";
+  g.fillText("A dark Nordic-fantasy theme for Gmail", 30 * u, h - 26 * u);
+  g.strokeStyle = "rgba(214,208,192,.45)"; g.lineWidth = Math.max(1, u);
+  g.beginPath(); g.moveTo(30 * u, h - 42 * u); g.lineTo(30 * u + 220 * u, h - 42 * u); g.stroke();
+}
+for (const sec of document.querySelectorAll("section")) {
+  sec.querySelector(".cap").addEventListener("click", () => capture(sec));
+  sec.querySelector(".dl").addEventListener("click", () => {
+    sec.querySelector("canvas").toBlob(b => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(b); a.download = sec.dataset.file; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    });
+  });
+}
+document.fonts.ready.then(() => setTimeout(() => document.querySelectorAll("section").forEach(capture), 1500));
+</script>
+</body>
+</html>

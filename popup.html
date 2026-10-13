@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Frostpeak Mail</title>
@@ -27,11 +27,12 @@
 </head>
 <body>
   <h1>Frostpeak Mail</h1>
-  <label for="enabled">Tema açık <input type="checkbox" id="enabled"></label>
-  <label for="animated">Hareketli sis <input type="checkbox" id="animated"></label>
-  <label for="dragon">Ejderha <input type="checkbox" id="dragon"></label>
-  <button type="button" id="bg">Arka plan resmi seç…</button>
-  <p>Değişiklikler açık Gmail sekmelerine anında uygulanır.</p>
+  <label for="enabled"><span data-i18n="popupThemeOn">Theme on</span> <input type="checkbox" id="enabled"></label>
+  <label for="animated"><span data-i18n="popupFog">Moving fog</span> <input type="checkbox" id="animated"></label>
+  <label for="dragon"><span data-i18n="popupDragon">Dragon</span> <input type="checkbox" id="dragon"></label>
+  <button type="button" id="bg" data-i18n="popupChooseBg">Choose background image…</button>
+  <p data-i18n="popupNote">Changes apply to open Gmail tabs right away.</p>
+  <script src="i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

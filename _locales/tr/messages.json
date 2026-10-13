@@ -1,0 +1,32 @@
+{
+  "name": { "message": "Frostpeak Mail" },
+  "description": { "message": "Gmail için koyu, kuzey fantastiği havasında bir tema: sisli dağlar, süzülen sis, çerçeveli menüler ve arada bir geçen bir ejderha." },
+
+  "popupThemeOn": { "message": "Tema açık" },
+  "popupFog": { "message": "Hareketli sis" },
+  "popupDragon": { "message": "Ejderha" },
+  "popupChooseBg": { "message": "Arka plan resmi seç…" },
+  "popupNote": { "message": "Değişiklikler açık Gmail sekmelerine anında uygulanır." },
+
+  "optTitle": { "message": "Arka plan" },
+  "optIntro": { "message": "Gmail'in arkasında kendi seçtiğin bir resim görünsün. Resim sadece bu tarayıcıda, eklentinin kendi deposunda saklanır. Hiçbir yere yüklenmez." },
+  "optDrop": { "message": "Resmi buraya sürükle ya da tıklayıp seç" },
+  "optFormats": { "message": "JPG, PNG veya WebP" },
+  "optPick": { "message": "Resim seç" },
+  "optClear": { "message": "Çizilen manzaraya dön" },
+  "optDim": { "message": "Karartma" },
+  "optNote": { "message": "Sis ve ejderha resmin üstünde de çalışır, istemezsen eklenti menüsünden kapatabilirsin. Resim parlaksa karartmayı artır, yoksa Gmail'in yazıları zor okunur. Büyük resimler kaydedilirken en fazla 2560 piksel genişliğe küçültülür." },
+  "optNotImage": { "message": "Bu bir resim dosyası değil. JPG, PNG veya WebP seç." },
+  "optPreparing": { "message": "Hazırlanıyor…" },
+  "optSaved": {
+    "message": "Kaydedildi ($SIZE$ MB). Açık Gmail sekmeleri hemen güncellenir.",
+    "placeholders": { "size": { "content": "$1" } }
+  },
+  "optSaveFailed": {
+    "message": "Resim kaydedilemedi: $ERROR$",
+    "placeholders": { "error": { "content": "$1" } }
+  },
+  "optCleared": { "message": "Resim kaldırıldı. Çizilen dağ manzarası geri geldi." },
+
+  "toastSent": { "message": "Ulak yola çıktı" }
+}

@@ -1,0 +1,32 @@
+{
+  "name": { "message": "Frostpeak Mail" },
+  "description": { "message": "A dark Nordic-fantasy theme for Gmail: misty mountains, drifting fog, framed menus and a dragon that passes now and then." },
+
+  "popupThemeOn": { "message": "Theme on" },
+  "popupFog": { "message": "Moving fog" },
+  "popupDragon": { "message": "Dragon" },
+  "popupChooseBg": { "message": "Choose background image…" },
+  "popupNote": { "message": "Changes apply to open Gmail tabs right away." },
+
+  "optTitle": { "message": "Background" },
+  "optIntro": { "message": "Show your own picture behind Gmail. It is stored only in this browser, in the extension's own storage. It is never uploaded anywhere." },
+  "optDrop": { "message": "Drop an image here or click to choose" },
+  "optFormats": { "message": "JPG, PNG or WebP" },
+  "optPick": { "message": "Choose image" },
+  "optClear": { "message": "Back to the painted landscape" },
+  "optDim": { "message": "Dimming" },
+  "optNote": { "message": "The fog and the dragon still play over your picture; switch them off from the toolbar menu if you prefer. If the picture is bright, raise the dimming so Gmail's text stays readable. Large pictures are scaled down to 2560 pixels wide when saved." },
+  "optNotImage": { "message": "That isn't an image file. Choose a JPG, PNG or WebP." },
+  "optPreparing": { "message": "Preparing…" },
+  "optSaved": {
+    "message": "Saved ($SIZE$ MB). Open Gmail tabs update right away.",
+    "placeholders": { "size": { "content": "$1" } }
+  },
+  "optSaveFailed": {
+    "message": "Couldn't save the picture: $ERROR$",
+    "placeholders": { "error": { "content": "$1" } }
+  },
+  "optCleared": { "message": "Picture removed. The painted mountains are back." },
+
+  "toastSent": { "message": "A courier has been dispatched" }
+}

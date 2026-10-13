@@ -250,7 +250,8 @@ function mountSky() {
 }
 
 /* ---------- courier banner instead of "Message sent" ---------- */
-const SENT = /(message sent|ileti gönderildi|mesaj gönderildi|e-posta gönderildi)/i;
+// Gmail's "sent" toast in the languages we recognise; anything else simply keeps Gmail's own toast
+const SENT = /(message sent|ileti gönderildi|mesaj gönderildi|e-posta gönderildi|nachricht gesendet|mensaje enviado|message envoyé|mensagem enviada|messaggio inviato)/i;
 let toast, toastTimer, lastSeen = "";
 function courier(msg) {
   if (!toast) { toast = document.createElement("div"); toast.id = "frostpeak-toast"; toast.setAttribute("role", "status"); document.body.append(toast); }
@@ -262,7 +263,7 @@ function watchAlerts() {
     if (!settings.enabled) return;
     const alert = document.querySelector('[role="alert"]');
     const text = alert?.textContent?.trim() || "";
-    if (text && text !== lastSeen && SENT.test(text)) courier("A courier has been dispatched");
+    if (text && text !== lastSeen && SENT.test(text)) courier(chrome.i18n.getMessage("toastSent") || "A courier has been dispatched");
     lastSeen = text;
   }).observe(document.body, { childList: true, subtree: true, characterData: true });
 }

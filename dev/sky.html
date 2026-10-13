@@ -19,6 +19,7 @@
   // just enough of the extension API for content.js to run on a plain page
   window.chrome = {
     runtime: { getURL: p => "../" + p },
+    i18n: { getMessage: () => "" },
     storage: { sync: { get: (d, cb) => cb(d) }, local: { get: (k, cb) => cb({}) }, onChanged: { addListener() {} } },
   };
 </script>

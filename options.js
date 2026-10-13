@@ -21,15 +21,15 @@ async function encode(file) {
 }
 
 async function use(file) {
-  if (!file || !file.type.startsWith("image/")) return say("Bu bir resim dosyası değil. JPG, PNG veya WebP seç.", true);
-  say("Hazırlanıyor…");
+  if (!file || !file.type.startsWith("image/")) return say(t("optNotImage"), true);
+  say(t("optPreparing"));
   try {
     const dataUrl = await encode(file);
     await chrome.storage.local.set({ bgImage: dataUrl });
     show(dataUrl);
-    say(`Kaydedildi (${(dataUrl.length / 1048576).toFixed(1)} MB). Açık Gmail sekmeleri hemen güncellenir.`);
+    say(t("optSaved", (dataUrl.length / 1048576).toFixed(1)));
   } catch (err) {
-    say("Resim kaydedilemedi: " + err.message, true);
+    say(t("optSaveFailed", err.message), true);
   }
 }
 
@@ -45,7 +45,7 @@ stage.addEventListener("drop", e => { e.preventDefault(); stage.classList.remove
 
 $("#clear").addEventListener("click", async () => {
   await chrome.storage.local.remove("bgImage");
-  show(null); say("Resim kaldırıldı. Çizilen dağ manzarası geri geldi.");
+  show(null); say(t("optCleared"));
 });
 
 const dim = $("#dim"), dimOut = $("#dimOut");

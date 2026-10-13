@@ -53,8 +53,13 @@ To preview the sky and the dragon without Gmail, run `python -m http.server 8765
 | `content.js` | Loads fonts, paints the sky, safety net, courier banner |
 | `popup.html`, `popup.js` | Toolbar menu |
 | `options.html`, `options.js` | Background image page |
+| `i18n.js`, `_locales/` | English and Turkish text |
+| `icons/` | Toolbar and store icons, drawn by `tools/make_icons.py` |
 | `fonts/` | Barlow Condensed, Barlow Semi Condensed, Cinzel |
 | `dev/sky.html` | Sky preview without Gmail |
+| `dev/promo.html` | Store promo tile and marquee from the live sky |
+| `tools/package.py` | Builds `dist/frostpeak-mail-<version>.zip` for the Chrome Web Store |
+| `PRIVACY.md`, `STORE.md` | Privacy policy and the store listing text |
 
 ## License
 
