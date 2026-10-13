@@ -1,7 +1,4 @@
 {
-  "name": { "message": "Frostpeak Mail" },
-  "description": { "message": "Gmail için koyu, kuzey fantastiği havasında bir tema: sisli dağlar, süzülen sis, çerçeveli menüler ve arada bir geçen bir ejderha." },
-
   "popupThemeOn": { "message": "Tema açık" },
   "popupFog": { "message": "Hareketli sis" },
   "popupDragon": { "message": "Ejderha" },
