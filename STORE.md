@@ -35,12 +35,14 @@ Everything to paste into the developer dashboard. Upload `dist/frostpeak-mail-<v
 
 ## Graphics
 
+`python tools/screenshots.py` renders all of these with headless Chrome.
+
 | Asset | Size | Where it comes from |
 | --- | --- | --- |
 | Store icon | 128 × 128 | `icons/icon128.png` |
-| Screenshots (4) | 1280 × 800 | `python tools/screenshots.py` → `dist/screenshots/`. Rendered from `dev/showcase.html`: the real skin over made-up mail, so no personal inbox is published. |
-| Small promo tile | 440 × 280 | `dev/promo.html` → Download |
-| Marquee (optional) | 1400 × 560 | `dev/promo.html` → Download |
+| Screenshots (4) | 1280 × 800 | `dist/screenshots/`. Rendered from `dev/showcase.html`: the real skin over made-up mail, so no personal inbox is published. |
+| Small promo tile | 440 × 280 | `dist/promo/small-tile-440x280.png` |
+| Marquee (optional) | 1400 × 560 | `dist/promo/marquee-1400x560.png` |
 
 The four views: inbox with category badges and the courier banner, an open plain-text mail, a newsletter on parchment, the compose window.
 

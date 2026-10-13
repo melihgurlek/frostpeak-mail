@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  Store promo tile / marquee: the real sky frozen on one frame, with the name on top.
+  It fills whatever window it is opened in; tools/screenshots.py renders it at 440x280 and 1400x560.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Frostpeak Mail · promo</title>
+<link rel="stylesheet" href="../skin.css">
+<style>
+  @font-face { font-family: "Frostpeak Cinzel"; src: url(../fonts/cinzel-latin.woff2) format("woff2"); }
+  @font-face { font-family: "Frostpeak Reading"; font-weight: 400; src: url(../fonts/barlow-semi-400-latin.woff2) format("woff2"); }
+  html, body { height: 100%; margin: 0; overflow: hidden; background: #0d0f10; }
+  .title {
+    position: fixed; left: 6.5vh; bottom: 9vh; z-index: 2; color: #e6e2d8;
+    display: grid; gap: 1.8vh;
+  }
+  .title::before {   /* soft shade under the words so they read on any frame */
+    content: ""; position: absolute; inset: -40vh -60vw -20vh -20vw; z-index: -1;
+    background: radial-gradient(ellipse at 20% 85%, rgba(0, 0, 0, .55), transparent 60%);
+  }
+  /* !important: skin.css sets every element's font with !important, as it must on Gmail */
+  html .title .name { font: 500 11vh/1 "Frostpeak Cinzel", serif !important; letter-spacing: .14em; }
+  .rule { width: 46vh; height: 1px; background: linear-gradient(to right, rgba(214, 208, 192, .6), transparent); }
+  html .title .tag { font: 400 6vh/1 "Frostpeak Reading", sans-serif !important; color: #b9b6ad; letter-spacing: .02em; }
+</style>
+</head>
+<body>
+<div class="title"><div class="name">FROSTPEAK MAIL</div><div class="rule"></div><div class="tag">A dark Nordic-fantasy theme for Gmail</div></div>
+<script>
+  const DRAGON_T = 14000;   // dragon high on the right, away from the title
+  window.requestAnimationFrame = () => 0;   // frozen: one hand-picked frame, drawn below
+  window.chrome = {
+    runtime: { getURL: p => "../" + p },
+    i18n: { getMessage: () => "" },
+    storage: { sync: { get: (d, cb) => cb(d) }, local: { get: (k, cb) => cb({}) }, onChanged: { addListener() {} } },
+  };
+</script>
+<script src="../content.js"></script>
+<script>setTimeout(() => frame(DRAGON_T), 300);</script>
+</body>
+</html>
