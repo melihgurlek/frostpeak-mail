@@ -1,4 +1,7 @@
 {
+  "name": { "message": "Frostpeak Mail" },
+  "description": { "message": "A dark Nordic-fantasy theme for Gmail: misty mountains, drifting fog, framed menus and a dragon that passes now and then." },
+
   "popupThemeOn": { "message": "Tema açık" },
   "popupFog": { "message": "Hareketli sis" },
   "popupDragon": { "message": "Ejderha" },
