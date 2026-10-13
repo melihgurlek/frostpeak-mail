@@ -56,6 +56,8 @@ To preview the sky and the dragon without Gmail, run `python -m http.server 8765
 | `fonts/` | Barlow Condensed, Barlow Semi Condensed, Cinzel |
 | `dev/sky.html` | Sky preview without Gmail |
 | `dev/promo.html` | Store promo tile and marquee from the live sky |
+| `dev/showcase.html` | Gmail-like layout with made-up mail, styled by the real skin, for store screenshots |
+| `tools/screenshots.py` | Renders the showcase views to 1280×800 PNGs with headless Chrome |
 | `tools/package.py` | Builds `dist/frostpeak-mail-<version>.zip` for the Chrome Web Store |
 | `PRIVACY.md`, `STORE.md` | Privacy policy and the store listing text |
 

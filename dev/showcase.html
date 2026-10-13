@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  Store screenshots without anyone's real inbox.
+  A stripped-down mail layout that uses the same class names and roles as Gmail, styled by the real
+  skin.css + content.js, filled with made-up mail. Views: #inbox, #read, #paper, #compose
+  Serve the repo root (python -m http.server 8765) and open http://localhost:8765/dev/showcase.html#inbox
+  tools/screenshots.py renders every view at 1280x800 with headless Chrome.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Frostpeak Mail · showcase</title>
+<link rel="stylesheet" href="../skin.css">
+<style>
+  /* the plain, Gmail-like dark layout underneath; skin.css paints over it exactly as it does on Gmail */
+  :root { --gm-text: #e3e3e3; --gm-muted: #a8a8a8; --gm-line: #3c4043; }
+  html, body { height: 100%; margin: 0; }
+  body { color: var(--gm-text); font: 14px Roboto, Arial, sans-serif; background: #111; overflow: hidden; }
+  .gb { display: flex; align-items: center; gap: 18px; height: 64px; padding: 0 16px; }
+  .burger { width: 24px; display: grid; gap: 4px; margin: 0 8px; }
+  .burger i { display: block; height: 2px; background: var(--gm-text); }
+  form[role="search"] { flex: 0 1 720px; margin-left: 150px; height: 46px; display: flex; align-items: center; gap: 12px; padding: 0 22px; background: #2a2b2e; border-radius: 24px; }
+  form[role="search"] input { flex: 1; background: none; border: 0; outline: none; color: inherit; font: inherit; }
+  .avatar { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; background: #5b6b7a; display: grid; place-items: center; font-weight: 500; }
+  .shell { display: grid; grid-template-columns: 256px 1fr; height: calc(100% - 64px); }
+  .side { padding: 8px 0 0; }
+  .z0 { padding: 8px 0 16px 8px; }
+  .z0 > [role="button"] { display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 24px; border-radius: 16px; background: #c2e7ff; color: #001d35; font-weight: 500; }
+  .TK { display: grid; gap: 0; }
+  .TO { display: flex; align-items: center; height: 32px; padding: 0 12px 0 26px; margin-right: 16px; border-radius: 0 16px 16px 0; }
+  .TO .ico { width: 18px; height: 14px; margin-right: 18px; border: 1.5px solid var(--gm-muted); border-radius: 2px; opacity: .8; }
+  .TO .nU { flex: 1; } .TO .bsU { font-size: 12px; }
+  .TO.nZ { background: #41474d; }
+  .labels { margin: 18px 0 6px 26px; font-size: 16px; }
+  .TO .dot { width: 12px; height: 12px; margin-right: 22px; border-radius: 3px; }
+  [role="main"] { margin: 0 16px 16px 0; border-radius: 16px; background: #1e1f20; display: flex; flex-direction: column; min-height: 0; }
+  .bar { display: flex; align-items: center; gap: 22px; height: 48px; padding: 0 16px; color: var(--gm-muted); }
+  .bar .cb { width: 14px; height: 14px; border: 1.5px solid var(--gm-muted); border-radius: 2px; }
+  .bar .count { margin-left: auto; font-size: 12px; }
+  .tabs { display: flex; height: 56px; border-bottom: 1px solid var(--gm-line); }
+  .tab { flex: 0 0 25%; max-width: 250px; display: grid; align-content: center; gap: 2px; padding: 0 16px; }
+  .tab b { font-weight: 500; display: flex; align-items: center; gap: 8px; }
+  .tab small { color: var(--gm-muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tab.on { box-shadow: inset 0 -3px #a8c7fa; }
+  .badge { background: #fff; color: #1f1f1f; font-size: 11px; font-weight: 500; padding: 0 6px; border-radius: 8px; line-height: 16px; }
+  .split { flex: 1; display: grid; grid-template-columns: 1fr; min-height: 0; }
+  body.reading .split { grid-template-columns: minmax(0, 46%) minmax(0, 54%); }
+  .Cp { overflow: hidden; }
+  table.F { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  tr.zA td { height: 40px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #2d2e30; }
+  tr.zA td.chk { width: 60px; } tr.zA td.yX { width: 180px; } tr.zA td.xW { width: 64px; text-align: right; padding-right: 16px; }
+  tr.zA.zE .bqe, tr.zA.zE .bog { font-weight: 700; }
+  .y2 { color: var(--gm-muted); }
+  body.reading tr.zA td.yX { width: 120px; } body.reading .y2 { display: none; }
+  .read { display: none; border-left: 1px solid var(--gm-line); padding: 20px 28px; overflow: hidden; }
+  body.reading .read { display: block; }
+  h2.hP { font-size: 22px; font-weight: 400; margin: 4px 0 20px; }
+  .ha { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+  .gD { font-weight: 700; } .go { color: var(--gm-muted); font-size: 12px; margin-left: 4px; } .g3 { font-size: 12px; }
+  .a3s { color: #222; font-size: 14px; line-height: 1.5; }
+  .a3s p { margin: 0 0 12px; }
+  .brb { display: flex; gap: 10px; margin: 18px 0 14px; }
+  .brb span { border: 1px solid #5f6368; color: #7cacf8; border-radius: 8px; padding: 6px 12px; font-size: 13px; }
+  .amn { display: flex; gap: 32px; padding: 10px 0; }
+  .amn span { color: var(--gm-text); }
+  .AD { position: fixed; right: 64px; bottom: 0; width: 520px; height: 470px; background: #fff; border-radius: 8px 8px 0 0; display: none; flex-direction: column; z-index: 3; }
+  body.composing .AD { display: flex; }
+  .aYF { padding: 10px 16px; font-size: 14px; font-weight: 500; }
+  .AD .fld { margin: 0 16px; padding: 8px 0; border-bottom: 1px solid #ddd; color: #444; }
+  .Am { flex: 1; margin: 12px 16px; color: #222; font-size: 14px; line-height: 1.5; white-space: pre-line; }
+  .dC { padding: 12px 16px; }
+  .T-I-atl { display: inline-block; padding: 9px 24px; background: #0b57d0; color: #fff; border-radius: 18px; font-weight: 500; }
+</style>
+</head>
+<body>
+<header class="gb" role="banner">
+  <div class="burger" aria-hidden="true"><i></i><i></i><i></i></div>
+  <form role="search" onsubmit="return false"><span aria-hidden="true">⌕</span><input id="q" placeholder="Search mail" aria-label="Search mail"></form>
+  <div class="avatar">A</div>
+</header>
+<div class="shell">
+  <aside class="side">
+    <div class="z0"><div role="button" class="T-I T-I-KE L3">✎ &nbsp;Compose</div></div>
+    <div role="navigation">
+      <div class="TK" id="nav"></div>
+      <div class="labels">Labels</div>
+      <div class="TK">
+        <div class="TO"><span class="dot" style="background:#e8eaed"></span><span class="nU">Cabin trip</span></div>
+        <div class="TO"><span class="dot" style="background:#fbd75b"></span><span class="nU">Field notes</span></div>
+      </div>
+    </div>
+  </aside>
+  <main role="main">
+    <div class="bar"><span class="cb"></span><span>⟳</span><span>⋮</span><span class="count">1–50 of 1,284</span></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="split">
+      <div class="Cp"><table class="F"><tbody id="rows"></tbody></table></div>
+      <div class="read" id="read"></div>
+    </div>
+  </main>
+</div>
+<div class="AD" role="dialog" aria-label="New message">
+  <div class="aYF">New Message</div>
+  <div class="fld">To &nbsp; ingrid.halvorsen@example.com</div>
+  <div class="fld">Hut keys for the weekend</div>
+  <div class="Am">Hi Ingrid,
+
+The keys are under the third stone by the woodshed, same as last winter. Firewood is stacked, but the upper trail is iced over past the bridge, so take the lake path.
+
+See you Friday,
+Aren</div>
+  <div class="dC"><span class="T-I-atl" role="button">Send</span></div>
+</div>
+
+<script>
+  // same stubs as dev/sky.html, plus a clock offset per view so the dragon is in frame
+  const VIEW = (location.hash.slice(1) || "inbox");
+  // Screenshot mode (?shot=…) freezes the sky on one hand-picked frame instead of racing headless
+  // Chrome's virtual clock: no animation loop, and the frame below puts the dragon over the nav.
+  const SHOT = location.search.includes("shot");
+  const DRAGON_T = 25280;
+  const nativeRaf = window.requestAnimationFrame.bind(window);
+  window.requestAnimationFrame = SHOT ? () => 0 : cb => nativeRaf(ts => cb(ts + DRAGON_T - 2500));
+  window.chrome = {
+    runtime: { getURL: p => "../" + p },
+    i18n: { getMessage: () => "" },
+    storage: { sync: { get: (d, cb) => cb(d) }, local: { get: (k, cb) => cb({}) }, onChanged: { addListener() {} } },
+  };
+</script>
+<script src="../content.js"></script>
+<script>
+const NAV = [["Inbox", "12", true], ["Starred", ""], ["Snoozed", ""], ["Important", ""], ["Sent", ""], ["Drafts", "3"], ["Purchases", "41"], ["Social", "208"], ["Updates", "1,107"], ["Forums", ""], ["Promotions", "632"]];
+nav.innerHTML = NAV.map(([n, c, on]) => `<div class="TO${on ? " nZ" : ""}"><span class="ico"></span><span class="nU">${n}</span><span class="bsU">${c}</span></div>`).join("");
+
+tabs.innerHTML = [
+  ["Primary", "", "", true],
+  ["Promotions", "4 new", "Northwind Outfitters – Winter layers are back"],
+  ["Social", "2 new", "Ingrid Halvorsen shared an album with you"],
+  ["Updates", "9 new", "Aurora Weekly – Tonight's forecast: KP 6"],
+].map(([n, b, s, on]) => `<div class="tab${on ? " on" : ""}"><b>${n}${b ? `<span class="badge">${b}</span>` : ""}</b>${s ? `<small>${s}</small>` : ""}</div>`).join("");
+
+const MAIL = [
+  [1, "Ingrid Halvorsen", "Hut keys for the weekend", "Where did you leave them last time? The trail map says the upper path is closed.", "9:41 AM"],
+  [1, "Mountain Rescue Volunteers", "Rota for November", "Thanks for signing up. Here are the shifts we still need to cover before the first snow.", "8:12 AM"],
+  [1, "Aurora Weekly", "Tonight's forecast: KP 6, clear skies up north", "Best viewing between 22:00 and 01:00. Head away from the town lights.", "7:30 AM"],
+  [0, "Fjell Cabin Rentals", "Your booking is confirmed", "Lakeside cabin, 3 nights, check-in Friday after 15:00. Firewood included.", "Oct 12"],
+  [0, "Leif Andersen", "Re: Photos from the ridge", "These came out much better than I expected. The fog in the third one is unreal.", "Oct 12"],
+  [1, "Northwind Outfitters", "Your order has shipped", "Insulated boots (size 43) and wool liner gloves are on their way.", "Oct 11"],
+  [0, "Sigrun at the Library", "Book you reserved is ready", "\"Old Roads of the North\" is waiting at the front desk until Thursday.", "Oct 11"],
+  [0, "Trail Club", "Saturday hike moved to 08:00", "Meeting point is the same: the car park below the old watchtower.", "Oct 10"],
+  [0, "Kari Nilsen", "Recipe you asked for", "Juniper and rosemary for the stew, and don't skip the slow part.", "Oct 10"],
+  [0, "Weather Service", "Frost warning for the valley", "Temperatures down to −9 °C overnight. Protect exposed pipes.", "Oct 9"],
+  [0, "Aren's Bank", "Your monthly statement is ready", "Log in to view your October statement.", "Oct 9"],
+  [0, "Observatory Society", "Members' night: the winter sky", "Bring warm clothes. Hot cider after the talk.", "Oct 8"],
+  [0, "Leif Andersen", "Map for the ridge walk", "Marked the two spots where the path splits. Keep left both times.", "Oct 8"],
+  [0, "Fjell Cabin Rentals", "How was your stay?", "We'd love to hear about it. Two minutes, promise.", "Oct 7"],
+];
+rows.innerHTML = MAIL.map(([u, from, subj, snip, date], i) => `
+  <tr class="zA ${u ? "zE" : "yO"}${VIEW !== "inbox" && i === (VIEW === "paper" ? 2 : 0) ? " btb" : ""}">
+    <td class="chk">☐ ☆</td><td class="yX yW"><span class="bqe">${from}</span></td>
+    <td class="y6"><span class="bog">${subj}</span><span class="y2"> – ${snip}</span></td>
+    <td class="xW"><span>${date}</span></td>
+  </tr>`).join("");
+
+const PLAIN = `
+  <h2 class="hP">Hut keys for the weekend</h2>
+  <div class="ha"><div><span class="gD">Ingrid Halvorsen</span><span class="go">&lt;ingrid.halvorsen@example.com&gt;</span></div><span class="g3">9:41 AM</span></div>
+  <div class="a3s"><p>Hi Aren,</p>
+  <p>Where did you leave the keys last time? I checked the porch and the usual hook, nothing.</p>
+  <p>Also, the trail map says the upper path is closed past the bridge. Do you know if that's still true, or can we take it on Saturday? Leif wants to get to the ridge before the light goes.</p>
+  <p>I'll bring the stew. You bring the good coffee.</p><p>Ingrid</p></div>
+  <div class="brb"><span>Under the woodshed stone.</span><span>Take the lake path.</span><span>See you Friday!</span></div>
+  <div class="amn"><span role="button">↩ Reply</span><span role="button">↪ Forward</span></div>`;
+
+const PAPER = `
+  <h2 class="hP">Tonight's forecast: KP 6, clear skies up north</h2>
+  <div class="ha"><div><span class="gD">Aurora Weekly</span><span class="go">&lt;news@aurora-weekly.example&gt;</span></div><span class="g3">7:30 AM</span></div>
+  <div class="a3s"><table width="100%" style="background:#ffffff;border-collapse:collapse"><tr><td style="padding:22px 26px;color:#1d2733;font:15px/1.5 Georgia,serif">
+    <div style="font:700 20px Georgia,serif;color:#0f3d5c;margin-bottom:10px">Aurora Weekly · Issue 112</div>
+    <p style="margin:0 0 10px">A strong solar wind reaches us this evening. Forecasters expect <b>KP 6</b>, which puts the lights well south of their usual band.</p>
+    <p style="margin:0 0 10px"><b>Best window:</b> 22:00 – 01:00. Clouds clear from the west after nine.</p>
+    <p style="margin:0 0 14px"><b>Where to go:</b> anywhere north-facing and away from street lights. The lake shore below the old watchtower is a reader favourite.</p>
+    <span style="display:inline-block;background:#0f3d5c;color:#fff;padding:8px 16px;border-radius:4px;font:600 13px Arial,sans-serif">See the live map</span>
+  </td></tr></table></div>
+  <div class="amn"><span role="button">↩ Reply</span><span role="button">↪ Forward</span></div>`;
+
+if (VIEW === "read") { document.body.classList.add("reading"); read.innerHTML = PLAIN; }
+if (VIEW === "paper") { document.body.classList.add("reading"); read.innerHTML = PAPER; }
+if (VIEW === "compose") document.body.classList.add("composing");
+if (VIEW === "inbox") setTimeout(() => courier("A courier has been dispatched"), 600);
+if (SHOT) setTimeout(() => { scan(); frame(DRAGON_T); }, 300);   // the safety-net scan waits for idle time, which never comes without frames
+</script>
+</body>
+</html>

@@ -38,11 +38,11 @@ Everything to paste into the developer dashboard. Upload `dist/frostpeak-mail-<v
 | Asset | Size | Where it comes from |
 | --- | --- | --- |
 | Store icon | 128 × 128 | `icons/icon128.png` |
-| Screenshots (1–5) | 1280 × 800 | Take them from Gmail yourself. Use a test account or hide personal mail. |
+| Screenshots (4) | 1280 × 800 | `python tools/screenshots.py` → `dist/screenshots/`. Rendered from `dev/showcase.html`: the real skin over made-up mail, so no personal inbox is published. |
 | Small promo tile | 440 × 280 | `dev/promo.html` → Download |
 | Marquee (optional) | 1400 × 560 | `dev/promo.html` → Download |
 
-Good screenshots: inbox with categories, an open plain-text mail, a newsletter on parchment, the popup menu, the background-image page.
+The four views: inbox with category badges and the courier banner, an open plain-text mail, a newsletter on parchment, the compose window.
 
 ## Privacy practices tab
 
